@@ -2,7 +2,7 @@ use std::env;
 use std::process::Command;
 use std::fs::File;
 use std::io::{self, Write};
-use chrono::{DateTime, Local, TimeZone};
+use chrono::{DateTime, Local};
 
 fn main() {
     // Get the command-line arguments
@@ -53,6 +53,7 @@ struct CommitData {
     date: String,
     message: String,
     time_difference: Option<String>,
+    changed_files: Option<String>,
 }
 
 fn process_commit_line(line: &str) -> CommitData {
@@ -63,7 +64,7 @@ fn process_commit_line(line: &str) -> CommitData {
     let message = fields[3].to_string();
     let time_difference = calculate_time_difference(fields[2]);
 
-    CommitData { hash, author, date, message, time_difference }
+    CommitData { hash, author, date, message, time_difference, changed_files: None }
 }
 
 fn calculate_time_difference(date_str: &str) -> Option<String> {
@@ -94,7 +95,7 @@ fn write_to_csv(filename: &str, project_name: &str, commit_data: Vec<CommitData>
 
     // Write additional information to each row
     for commit in commit_data {
-        writeln!(file, "{},{},{},{},{},{},{}", project_name, commit.changed_files.unwrap_or("N/A"), commit.hash, commit.author, commit.date, commit.message, commit.time_difference.unwrap_or("N/A"))?;
+        writeln!(file, "{},{},{},{},{},{},{}", project_name, commit.changed_files.unwrap_or_else(|| "N/A".to_string()), commit.hash, commit.author, commit.date, commit.message, commit.time_difference.unwrap_or_else(|| "N/A".to_string()))?;
     }
 
     println!("Commit data saved to {}", filename);
