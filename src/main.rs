@@ -29,7 +29,7 @@ fn main() {
 
         // Write the commit data to a CSV file
         if let Err(err) = write_to_csv("commit_logs.csv", commit_data) {
-            eprintln!("Error writing to CSV file: {}", err);
+            eprintln!("Error writing to CSV files: {}", err);
         }
     } else {
         // Print the error message if the command failed
