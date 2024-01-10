@@ -1,8 +1,8 @@
 use std::process::Command;
 use std::fs::File;
 use std::io::{self, Write};
-use whoami;
-use chrono::{DateTime, Local, TimeZone};
+// use whoami;
+use chrono::{DateTime, Local};
 
 fn main() {
     // Get the current username dynamically
