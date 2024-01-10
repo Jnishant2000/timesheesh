@@ -14,7 +14,7 @@ fn main() {
         // .arg(format!("--author={}", username))
         .arg("--format=%h,%an,%ad,%s") // Customize the format for CSV output
         .output()
-        .expect("Failed to execute command");
+        .expect("Failed to execute command on develop");
 
     // Check if the command was successful
     if output.status.success() {
